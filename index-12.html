@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una sorpresa para ti ❤️</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Quicksand:wght@400;500;600&display=swap');
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:#080d1d; color:#fff;
+  font-family:'Quicksand',sans-serif; overflow-x:hidden;
+}
+.screen{
+  min-height:100vh; display:none; position:relative; overflow:hidden;
+  padding:55px 20px; align-items:center; justify-content:center;
+}
+.screen.active{display:flex; animation:fade .8s ease}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.stars,.stars:before,.stars:after{
+  position:absolute; inset:0; content:""; pointer-events:none;
+  background-image:
+    radial-gradient(circle,#fff 1px,transparent 1.5px),
+    radial-gradient(circle,#ff9fbd 1px,transparent 1.5px);
+  background-size:95px 95px,150px 150px;
+  background-position:10px 20px,60px 80px;
+  opacity:.55;
+}
+.stars:before{transform:translate(35px,45px);opacity:.3}
+.card{
+  width:min(720px,100%); text-align:center; position:relative; z-index:2;
+}
+h1,h2{font-family:'Caveat',cursive;font-weight:500}
+h1{font-size:clamp(46px,10vw,78px);margin:10px 0}
+h2{font-size:clamp(34px,7vw,55px);margin:8px 0 25px}
+p{font-size:18px;line-height:1.8;margin:15px auto;max-width:620px}
+.small{font-size:16px;opacity:.9}
+.heart{font-size:68px;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{transform:scale(1.15)}}
+.btn{
+  display:inline-block; border:0; border-radius:999px; padding:14px 30px;
+  background:#ef5b82;color:#fff;font-size:17px;font-weight:600;
+  cursor:pointer; box-shadow:0 8px 25px rgba(239,91,130,.25);
+  transition:.2s; margin-top:18px;
+}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.paper{
+  color:#432d31; background:#f7ead7; padding:38px 30px;
+  width:min(650px,100%); box-shadow:0 15px 40px rgba(0,0,0,.4);
+  transform:rotate(-.4deg); position:relative;
+}
+.paper:before{
+  content:"";position:absolute;inset:10px;border:1px solid #d8bda9;pointer-events:none;
+}
+.paper p{position:relative;z-index:1}
+.tape{position:absolute;width:70px;height:22px;background:#e9c9bb;top:-9px;right:25px;transform:rotate(4deg)}
+.envelope{
+  width:min(340px,85vw);height:220px;background:#f7a7b9;position:relative;
+  margin:25px auto;border-radius:8px;box-shadow:0 15px 45px rgba(255,80,130,.25);
+}
+.envelope:before{
+  content:"";position:absolute;left:0;top:0;border-left:170px solid transparent;
+  border-right:170px solid transparent;border-top:115px solid #f9c1ce;z-index:2;
+}
+.envelope:after{
+  content:"♥";position:absolute;left:50%;top:43%;transform:translate(-50%,-50%);
+  z-index:3;font-size:44px;color:#df3d62;
+}
+.gallery{
+  width:min(800px,100%);display:grid;grid-template-columns:repeat(2,1fr);gap:18px;
+}
+.photo{
+  background:#f7ead7;padding:10px 10px 30px;transform:rotate(var(--r));
+  box-shadow:0 8px 25px rgba(0,0,0,.35);color:#432d31;font-family:'Caveat',cursive;
+  font-size:21px;
+}
+.photo img{display:block;width:100%;height:210px;object-fit:cover;background:#ddd}
+.photo span{display:block;padding-top:7px}
+.music{
+  width:min(430px,100%);border:1px solid #a34d70;border-radius:18px;
+  padding:25px;background:#12152c;box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+.music .cover{width:100px;height:100px;border-radius:12px;object-fit:cover;background:#333}
+.music a{color:white;text-decoration:none}
+.counter{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:30px 0}
+.unit{border:1px solid #4b527a;border-radius:12px;padding:15px 18px;min-width:90px;background:#11162c}
+.unit b{display:block;font-size:30px;font-family:'Caveat',cursive}
+.secret{display:none;margin:25px auto 0;animation:fade .8s ease}
+.final{background:linear-gradient(#080d1dcc,#080d1d88),url('foto6.jpg') center/cover}
+.footer{position:absolute;bottom:18px;font-family:'Caveat',cursive;font-size:20px}
+@media(max-width:550px){
+  .gallery{grid-template-columns:1fr}
+  .photo img{height:250px}
+  p{font-size:17px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 1. PANTALLA INICIAL -->
+<section class="screen active" id="s1">
+  <div class="stars"></div><div class="card">
+    <div class="heart">♡</div>
+    <h1>Tienes una sorpresa</h1>
+    <div class="heart">♡</div>
+    <p>Hay algo muy especial esperándote...</p>
+    <button class="btn" onclick="go(2)">Abrir carta →</button>
+  </div>
+</section>
+
+<!-- 2. ANIMACIÓN DE APERTURA -->
+<section class="screen" id="s2">
+  <div class="stars"></div><div class="card">
+    <div class="heart">♡</div>
+    <div class="envelope"></div>
+    <h2>Está bien...</h2>
+    <p>Puedes abrirla. 💌</p>
+    <button class="btn" onclick="go(3)">Abrir →</button>
+  </div>
+</section>
+
+<!-- 3. CARTA PARTE 1 -->
+<section class="screen" id="s3">
+  <div class="card paper">
+    <div class="tape"></div>
+    <h2>Para mi persona favorita ❤️</h2>
+    <p>Si estás viendo esto, significa que escaneaste el código que te dejé... y eso ya es algo muy especial.</p>
+    <p>Quería hacer algo diferente y bonito para recordarte lo mucho que significas para mí en este momento de mi vida. No tengo palabras suficientes para explicarte lo tanto que te aprecio, pero aun así voy a intentar decírtelo de la mejor manera, mi amor.</p>
+    <button class="btn" onclick="go(4)">Continuar →</button>
+  </div>
+</section>
+
+<!-- 4. CARTA PARTE 2 -->
+<section class="screen" id="s4">
+  <div class="card paper">
+    <h2>Un pequeño recordatorio ❤️</h2>
+    <p>Gracias amor por cada risa, cada abrazo, cada beso, cada conversación y cada segundo que hemos compartido en este poquito tiempo juntos.</p>
+    <p>Cuando estoy contigo, cada momento, cada segundo se siente bonito, especial y real.</p>
+    <p>No sé qué nos depare en el futuro, amor, pero sí sé que quiero seguir creando recuerdos, momentos y anécdotas a tu lado.</p>
+    <p><strong>Eres una persona muy especial para mí.</strong></p>
+    <button class="btn" onclick="go(5)">Ver nuestros recuerdos →</button>
+  </div>
+</section>
+
+<!-- 5. MENSAJE ESPECIAL -->
+<section class="screen" id="s5">
+  <div class="card paper">
+    <h2>Un mensaje especial ❤️</h2>
+    <p>Entre tantas personas en el mundo, me alegra muchísimo haber coincidido contigo.</p>
+    <p>Y aunque esta página sea pequeña, lleva algo muy grande detrás: todo el cariño que te tengo.</p>
+    <p><strong>Gracias por ser tú.</strong></p>
+    <button class="btn" onclick="go(6)">Tengo otra sorpresa →</button>
+  </div>
+</section>
+
+<!-- 8. SORPRESA FINAL -->
+<section class="screen" id="s6">
+  <div class="card paper">
+    <h2>🎁 Y todavía falta algo...</h2>
+    <p>Si llegaste hasta aquí, te ganaste una última sorpresa.</p>
+    <button class="btn" onclick="showSecret()">Abrir sorpresa →</button>
+    <div class="secret" id="secret">
+      <p><strong>✨ Encontraste el mensaje secreto ✨</strong></p>
+      <p>De todas las cosas bonitas que podía poner aquí, elegí una muy sencilla:</p>
+      <p><strong>Me encanta tenerte en mi vida. ❤️</strong></p>
+      <button class="btn" onclick="go(7)">Continuar →</button>
+    </div>
+  </div>
+</section>
+
+<!-- 11. SORPRESA FINAL PARTE 2 -->
+<section class="screen" id="s7">
+  <div class="stars"></div><div class="card">
+    <div class="heart">♥</div>
+    <h2>No sé qué nos depare para el futuro ❤️</h2>
+    <p>No sé qué nos depare para el futuro, pero espero que sean momentos súper bonitos a tu lado, amor.</p>
+    <p>Estoy muy emocionado de estar viviendo y empezando esta etapa junto a tu lado.</p>
+    <p>Gracias mucho, mi amor, por empezar a formar parte de mi día a día.</p>
+    <p style="font-family:'Caveat';font-size:38px">Te quiero mucho. ❤️</p>
+    <button class="btn" onclick="go(7)">Ver el final →</button>
+  </div>
+</section>
+
+<!-- 12. CIERRE -->
+<section class="screen final" id="s8">
+  <div class="card">
+    <h2>Esto no es el final...</h2>
+    <p>Es solo otra forma de decirte que eres muy especial para mí.</p>
+    <div class="heart">♡</div>
+    <p style="font-family:'Caveat';font-size:30px">Gracias por existir ❤️</p>
+  </div>
+  <div class="footer">Hecho especialmente para ti ♡</div>
+</section>
+
+<script>
+function go(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showSecret(){
+  document.getElementById('secret').style.display='block';
+}
+
+
+</script>
+
+</body>
+</html>
